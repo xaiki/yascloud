@@ -10,6 +10,9 @@ basepath = os.getcwd()
 app = Flask(__name__)
 CORS(app)
 
+stopwords = open(f'{basepath}/python/stopwords-es.txt').read().split('\n')
+wc = WordCloud(stopwords=stopwords)
+
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
@@ -23,6 +26,6 @@ def hash_image(hash):
     except:
         text = request.get_data().decode("utf-8")
         print("processing for", text)
-        WordCloud().generate(text).to_file(filename)
+        wc.generate(text).to_file(filename)
         return send_file(filename, mimetype="image/png")
 
