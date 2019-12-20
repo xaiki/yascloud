@@ -262,9 +262,6 @@
 </script>
 
 <div>
-  <p>{text}</p>
-  <p>{hash}</p>
-
   <div class="chat">
     <div class="chat-title">
       <h1>World Cloud generator</h1>
