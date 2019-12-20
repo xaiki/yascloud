@@ -1,4 +1,4 @@
-import Svelte from './index.svelte'
+import Svelte from './cloud.svelte'
 
 new Svelte({
   target: document.body
