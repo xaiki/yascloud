@@ -1,3 +1,25 @@
+# YASCLOUD
+
+this is a small hack based on svelte-typescript-template, it has 2 parts, a
+svelte app and a python server.
+
+## quickstart
+clone and run
+```sh
+yarn
+pipenv install
+yarn start &
+env FLASK_APP=python/cloud_server.py FLASK_ENV=developement FLASK_DEBUG=1 pipenv run python -m flask run
+```
+
+it should get your js app runing on port 8080 and your python server running
+on port 5000
+
+## how it works
+it's a hack, we hash the text into sha1 and ask for that blob to the python
+server, if the file `imgs/${hash}.png` exist we send that, if not we
+generate it from the `POST` data in the API request
+
 # 🚧  Svelte Template
 
 > Svelte + Typescript + Parcel + Express
