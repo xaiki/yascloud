@@ -48,6 +48,7 @@
  }
 
  .bg {
+     position: fixed;
      width: 100%;
      height: 100%;
      top: 0;
@@ -260,30 +261,27 @@
                                     .then(b => imgData = URL.createObjectURL(b))
  }
 </script>
-
-<div>
-  <div class="chat">
-    <div class="chat-title">
-      <h1>World Cloud generator</h1>
-      <h2>hecho con <span class="red">♥</span></h2>
-      <figure class="avatar">
-        <img src="http://camba.coop/_nuxt/img/dddf669.svg" /></figure>
-    </div>
-    <div class="messages">
-      <div class="messages-content">
-        {#if !imgData}
-        <span>loading…</span>
-        {:else}
-        <img src={imgData}/>
-        {/if}
-      </div>
-    </div>
-
-    <div class="message-box">
-      <textarea type="text" class="message-input" bind:value={text} placeholder="enter text"/>
-      <button type="submit" class="message-submit" on:click={handleSend}>Send</button>
-    </div>
-
+<div class="chat">
+  <div class="chat-title">
+    <h1>World Cloud generator</h1>
+    <h2>hecho con <span class="red">♥</span></h2>
+    <figure class="avatar">
+      <img src="http://camba.coop/_nuxt/img/dddf669.svg" /></figure>
   </div>
-  <div class="bg"></div>
+  <div class="messages">
+    <div class="messages-content">
+      {#if !imgData}
+      <span>loading…</span>
+      {:else}
+      <img src={imgData}/>
+      {/if}
+    </div>
+  </div>
+
+  <div class="message-box">
+    <textarea type="text" class="message-input" bind:value={text} placeholder="enter text"/>
+    <button type="submit" class="message-submit" on:click={handleSend}>Send</button>
+  </div>
+
 </div>
+<div class="bg"></div>
