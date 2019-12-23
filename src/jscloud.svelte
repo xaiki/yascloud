@@ -182,13 +182,13 @@
          bottom: 9px;
          font-size: 10px;
          text-transform: uppercase;
+         color: #fff;
          line-height: 1;
          padding: 6px 10px; 
      }
 
      & .message-submit {
          right: 10px;
-         color: #fff;
          border: none;
          background: #248A52;
          border-radius: 10px;
