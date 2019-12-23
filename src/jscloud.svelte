@@ -54,7 +54,7 @@
      top: 0;
      left: 0;
      z-index: 1;
-     background: url('https://images.unsplash.com/photo-1451186859696-371d9477be93?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925') no-repeat 0 0;
+     background: linear-gradient(45deg, steelblue, hotpink, yellow);
      filter: blur(80px);
      transform: scale(1.2);
  }
@@ -176,18 +176,21 @@
          color: transparent;
      }
 
-     & .message-submit {
+     & .last-row {
          position: absolute;
          z-index: 1;
          bottom: 9px;
-         right: 10px;
-         color: #fff;
-         border: none;
-         background: #248A52;
          font-size: 10px;
          text-transform: uppercase;
          line-height: 1;
          padding: 6px 10px; 
+     }
+
+     & .message-submit {
+         right: 10px;
+         color: #fff;
+         border: none;
+         background: #248A52;
          border-radius: 10px;
          outline: none!important;
          transition: background .2s ease;
@@ -221,8 +224,6 @@
      font-size: large;
  }
 </style>
-
-
 <div class="chat">
   <div class="chat-title">
     <h1>World Cloud generator</h1>
@@ -232,17 +233,17 @@
   </div>
   <div class="messages">
     <div class="messages-content">
-      {#if !imgData}
-      <span>loading…</span>
-      {:else}
-      <img src={imgData}/>
-      {/if}
+      <D3Viz text={renderText}/>
     </div>
   </div>
 
   <div class="message-box">
-    <textarea type="text" class="message-input" bind:value={text} placeholder="enter text"/>
-    <button type="submit" class="message-submit" on:click={handleSend}>Send</button>
+    <textarea type="text" class="message-input" bind:value={text} placeholder={placeholder}/>
+    <form class="last-row">
+      <input type=checkbox bind:checked={quotes} on:change={handleSend}/>
+      <label>Split quotes</label>
+    </form>
+    <button type="submit" class="message-submit last-row" on:click={handleSend}>Send</button>
   </div>
 
 </div>
@@ -250,41 +251,28 @@
 
 <script lang="typescript">
  import D3Viz from './d3.svelte';
- const enc = new TextEncoder();
- const API_URL="http://localhost:5000/img"
 
+ const placeholder = `please enter text
+ «quoted test»
+”quoted 2 test”
+ `
  let text;
- let hash;
- let imgData;
-
- function bufferToHex(buffer) {
-   if (!buffer) return '';
-   var s = '', h = '0123456789ABCDEF';
-   (new Uint8Array(buffer)).forEach((v) => { s += h[v >> 4] + h[v & 15]; });
-   return s;
- }
+ let renderText = placeholder;
+ let quotes
+ const quoteChars = [['”', '”'], ['«', '»'], ['\'', '\''], ['\"', '\"']]
+ const quoteRE = quoteChars.map(([s, e]) => new RegExp(`${s}([^${s}]+)${e}`, 'gmu'))
 
  function handleSend() {
-   const strippedText = (text || '').replace(/\s+/g, ' ')
+   const strippedText = (text || placeholder).replace(/\s+/g, ' ')
 
-   crypto.subtle.digest('SHA-1', enc.encode(strippedText))
-                                    .then(bufferToHex)
-                                    .then(h => {
-                                      hash = h
-                                      return fetch(`${API_URL}/${hash}`, {
-                                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                                        mode: 'cors', // no-cors, *cors, same-origin
-                                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                                        credentials: 'same-origin', // include, *same-origin, omit
-                                        headers: {
-                                          'Content-Type': 'text'
-                                          // 'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        redirect: 'follow', // manual, *follow, error
-                                        referrer: 'no-referrer', // no-referrer, *client
-                                        body: strippedText
-                                      })
-                                    }).then(r => r.blob())
-                                    .then(b => imgData = URL.createObjectURL(b))
+   if (quotes) {
+     const quoted = quoteRE.map(re => (strippedText.match(re) || [])
+       .map(s => s.replace(/^./, '')
+                  .replace(/.$/, '')))
+
+     renderText = quoted.join(' ')
+   } else {
+     renderText = strippedText;
+   }
  }
 </script>

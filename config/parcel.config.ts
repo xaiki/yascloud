@@ -18,7 +18,7 @@ export const options = {
   logLevel: 3,
   hmrPort: 0,
   hmrHostname: '',
-  sourceMaps: false,
+  sourceMaps: true,
   detailedReport: false
 }
 
@@ -30,17 +30,17 @@ export const runBundle = async (options) => {
   return await getBundler(options).bundle()
 }
 
-if(process.argv[1] == __filename){
-  switch(process.argv[2]){
-      case '--serve':
-          serve()
-          break
-      case '--build':
-          runBundle({...options, minify: true})
-          break
-      case '--watch':
-          runBundle({...options, watch: true})
-          break
+if (process.argv[1] == __filename) {
+  switch (process.argv[2]) {
+    case '--serve':
+      serve()
+      break
+    case '--build':
+      runBundle({ ...options, minify: true })
+      break
+    case '--watch':
+      runBundle({ ...options, watch: true })
+      break
   }
 }
 
