@@ -18,7 +18,7 @@
     "folder-logger": "^1.0.7",
     "just-throttle": "^1.1.0",
     "nested-static": "^1.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-svelte": "^4.0.2",
     "postcss": "^7.0.23",
