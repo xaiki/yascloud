@@ -12,7 +12,7 @@
   "dependencies": {
     "autoprefixer": "^9.7.2",
     "cors": "^2.8.5",
-    "d3": "^5.14.2",
+    "d3": "^7.6.1",
     "d3-cloud": "^1.2.5",
     "express": "^4.17.1",
     "folder-logger": "^1.0.7",
