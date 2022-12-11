@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "d3": "^5.14.2",
     "d3-cloud": "^1.2.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "folder-logger": "^1.0.7",
     "just-throttle": "^1.1.0",
     "nested-static": "^1.1.0",
